@@ -21,7 +21,7 @@ At the start of the game, player enters the number of rounds game is played for.
 Players simultaneously open their hands to display a symbol:
 >* Fist equals rock
 >* Open hand equals paper
->* Showing the index and middle finger equals scissors.
+>* Crossing index and middle finger equals scissors.
 
 Round winner is determined by the following schema:
 >* paper beats (wraps) rock

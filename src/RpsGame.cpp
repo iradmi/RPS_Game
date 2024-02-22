@@ -21,8 +21,7 @@ RpsGame::RpsGame(std::shared_ptr<Rng::IRandomNumberGenerator> rng,
                  milliseconds_t roundDelay,
                  std::istream& iStream,
                  std::ostream& oStream) 
-    : _numOfRounds(0),
-      _currRoundNum(0),
+    : _currRoundNum(0),
       _userScore(0),
       _pcScore(0),
       _rngEngine(rng),
@@ -103,7 +102,7 @@ size_t RpsGame::promptAndValidateNumberOfRoundsInput() {
         if (!(_iStream >> numOfRndsInput)) {
             invalidRoundsWarningMsg();
             refreshConsoleInput();
-              continue;
+            continue;
         }
 
         if (isNumberOfRoundsValid(numOfRndsInput)) {
@@ -117,8 +116,10 @@ size_t RpsGame::promptAndValidateNumberOfRoundsInput() {
     return numOfRndsInput;
 }
 
-RpsGame::Player RpsGame::determineRoundWinner(RpsGame::Symbol userSymbol, RpsGame::Symbol computerSymbol) const {
-    return static_cast<RpsGame::Player> ((3 + static_cast<int>(userSymbol) - static_cast<int>(computerSymbol)) % 3);
+RpsGame::Player RpsGame::determineRoundWinner(RpsGame::Symbol userSymbol, 
+                                              RpsGame::Symbol computerSymbol) const {
+    return static_cast<RpsGame::Player> ((3 + static_cast<int>(userSymbol) - 
+                                          static_cast<int>(computerSymbol)) % 3);
 }
 
 void RpsGame::determineAndPronounceRoundWinner(Symbol userSymbol, Symbol computerSymbol) {
@@ -226,12 +227,9 @@ void RpsGame::pronounceGameWinner() {
 }
 
 void RpsGame::startCompetition(size_t numRounds) {
-    using namespace std::this_thread;     // sleep_for, sleep_until
-    //using std::chrono::system_clock;
-
     while (++_currRoundNum <= numRounds) {
         playRound();
-        sleep_for(_roundDelay);
+        std::this_thread::sleep_for(_roundDelay);
     }
 }
 

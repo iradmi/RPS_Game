@@ -105,6 +105,8 @@ private:
     static std::string_view constexpr 
             convertSymbolToUtf(Symbol symbol);
     
+    static constexpr size_t _NUM_OF_SYMBOLS = 3;
+
     static constexpr std::string_view  _ROCK_SYMBOL_UTF     = "\U0001F44A";
     static constexpr std::string_view  _PAPER_SYMBOL_UTF    = "\U0001F590";
     static constexpr std::string_view  _SCISSORS_SYMBOL_UTF = "\U0001F91E"; // "\U0000270C";
@@ -113,8 +115,7 @@ private:
 
     static constexpr uint8_t _ROUNDS_NUM_MIN = 1;
     static constexpr uint8_t _ROUNDS_NUM_MAX = 100;
-    
-    size_t                                        _numOfRounds;
+
     size_t                                        _currRoundNum;
     uint8_t                                       _userScore;
     uint8_t                                       _pcScore;

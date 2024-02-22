@@ -13,18 +13,18 @@ namespace Rng {
 
 class IRandomNumberGenerator {
 public:
-	IRandomNumberGenerator() = default;
+    IRandomNumberGenerator() = default;
 
-	IRandomNumberGenerator(const IRandomNumberGenerator& other) = delete;
-	IRandomNumberGenerator(IRandomNumberGenerator&& other) noexcept = default;
+    IRandomNumberGenerator(const IRandomNumberGenerator& other) = delete;
+    IRandomNumberGenerator(IRandomNumberGenerator&& other) noexcept = default;
 
-	IRandomNumberGenerator& operator=(const IRandomNumberGenerator& other) = delete;
-	IRandomNumberGenerator& operator=(IRandomNumberGenerator&& other) noexcept = default;
+    IRandomNumberGenerator& operator=(const IRandomNumberGenerator& other) = delete;
+    IRandomNumberGenerator& operator=(IRandomNumberGenerator&& other) noexcept = default;
 
-	virtual ~IRandomNumberGenerator() = default;
+    virtual ~IRandomNumberGenerator() = default;
 
     /// Brief:      Function returns random number between param lower_bound and upper_bound.
-	virtual int64_t generateRandomNumber(int64_t upperBound, int64_t lowerBound) = 0;
+    virtual int64_t generateRandomNumber(int64_t upperBound, int64_t lowerBound) = 0;
 };
 
 } // namespace Rng

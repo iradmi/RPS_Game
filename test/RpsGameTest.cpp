@@ -25,9 +25,9 @@ class RngEngineMock : public Rng::IRandomNumberGenerator {
 class RockPapersScissorsGameFixtureTest : public Test {
  protected:
     virtual void SetUp() {
-		_rngMock = std::make_shared<RngEngineMock>();
-		_game = std::make_unique<Game::RpsGame>(_rngMock, std::chrono::milliseconds(0), _input, _output);
-	}
+        _rngMock = std::make_shared<RngEngineMock>();
+        _game = std::make_unique<Game::RpsGame>(_rngMock, std::chrono::milliseconds(0), _input, _output);
+    }
     
     virtual void TearDown() {}
 
@@ -37,19 +37,19 @@ class RockPapersScissorsGameFixtureTest : public Test {
 
     std::unique_ptr<Game::IGame>   _game;
     std::shared_ptr<RngEngineMock> _rngMock;
-	std::istringstream             _input;
+    std::istringstream             _input;
     std::ostringstream             _output;
 };
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_FinalGameOutcome_UserWins) {
     // setup
-	_input.str("2 2 2");		 
+    _input.str("2 2 2");		 
     
     EXPECT_CALL(*_rngMock, generateRandomNumber(1, 3))
-		.Times(2)
-		.WillOnce(Return(1))
-		.WillOnce(Return(2));
-	// execute												 
+        .Times(2)
+        .WillOnce(Return(1))
+        .WillOnce(Return(2));
+    // execute												 
     _game->run();
     
     // assert
@@ -57,12 +57,12 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_FinalGameOutcome_UserWins) {
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_FinalGameOutcome_ComputerWins) {												 
-	_input.str("1 3"); // round scissors		
-	
-	EXPECT_CALL(*_rngMock, generateRandomNumber(1, 3))
-		.Times(1)
-		.WillOnce(Return(1));
-	// execute
+    _input.str("1 3"); // round scissors		
+    
+    EXPECT_CALL(*_rngMock, generateRandomNumber(1, 3))
+        .Times(1)
+        .WillOnce(Return(1));
+    // execute
     _game->run(); 
 
  
@@ -72,12 +72,12 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_FinalGameOutcome_ComputerWins)
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_FinalGameOutcome_MatchDraw) {												 
-	_input.str("101 1 5 3"); // round(invalid) round symbol(invalid) symbol(scissors)
+    _input.str("101 1 5 3"); // round(invalid) round symbol(invalid) symbol(scissors)
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(1, 3))
-		.Times(1)
-		.WillOnce(Return(3));
-	// execute
+    EXPECT_CALL(*_rngMock, generateRandomNumber(1, 3))
+        .Times(1)
+        .WillOnce(Return(3));
+    // execute
     _game->run();
 
     // assert
@@ -87,16 +87,16 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_FinalGameOutcome_MatchDraw) {
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_RockBeatsScissors_UserWin) {
-	int Rock = 1;
-	int Scissors = 3;
-	// setup
-	_input.str("1 1"); // rounds symbol
+    int Rock = 1;
+    int Scissors = 3;
+    // setup
+    _input.str("1 1"); // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Scissors));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Scissors));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -104,17 +104,17 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_RockBeatsScissors
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_PaperBeatsRock_UserWin) {
-	int Rock = 1;
-	//int Paper = 2;
-	int Scissors = 3;
-	// setup
-	_input.str("1 2"); // rounds symbol
+    int Rock = 1;
+    //int Paper = 2;
+    int Scissors = 3;
+    // setup
+    _input.str("1 2"); // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Rock));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Rock));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -122,17 +122,17 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_PaperBeatsRock_Us
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_ScissorsBeatPaper_UserWin) {
-	int Rock = 1;
-	int Paper = 2;
-	int Scissors = 3;
-	// setup
-	_input.str("1 3");  // rounds symbol
+    int Rock = 1;
+    int Paper = 2;
+    int Scissors = 3;
+    // setup
+    _input.str("1 3");  // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Paper));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Paper));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -140,16 +140,16 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_ScissorsBeatPaper
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_RockBeatsScissors_PCWins) {
-	int Rock = 1;
-	int Scissors = 3;
-	// setup
-	_input.str("1 3"); // rounds symbol
+    int Rock = 1;
+    int Scissors = 3;
+    // setup
+    _input.str("1 3"); // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Rock));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Rock));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -157,17 +157,17 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_RockBeatsScissors
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_PaperBeatsRock_PCWins) {
-	int Rock = 1;
-	int Paper = 2;
-	int Scissors = 3;
-	// setup
-	_input.str("1 1"); // rounds symbol
+    int Rock = 1;
+    int Paper = 2;
+    int Scissors = 3;
+    // setup
+    _input.str("1 1"); // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Paper));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Paper));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -175,18 +175,18 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_PaperBeatsRock_PC
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_ScissorsBeatPaper_PCWins) {
-	int Rock = 1;
-	//int Paper = 2;
-	int Scissors = 3;
+    int Rock = 1;
+    //int Paper = 2;
+    int Scissors = 3;
 
-	// setup
-	_input.str("1 2");
+    // setup
+    _input.str("1 2");
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Scissors));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Scissors));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -194,18 +194,18 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_ScissorsBeatPaper
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_RockAll_Draw) {
-	int Rock = 1;
-	//int Paper = 2;
-	int Scissors = 3;
+    int Rock = 1;
+    //int Paper = 2;
+    int Scissors = 3;
 
-	// setup
-	_input.str("1 1");  // rounds symbol
+    // setup
+    _input.str("1 1");  // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Rock));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Rock));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -214,18 +214,18 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_RockAll_Draw) {
 
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_PaperAll_Draw) {
-	int Rock = 1;
-	int Paper = 2;
-	int Scissors = 3;
+    int Rock = 1;
+    int Paper = 2;
+    int Scissors = 3;
 
-	// setup
-	_input.str("1 2");  // rounds symbol
+    // setup
+    _input.str("1 2");  // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Paper));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Paper));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -233,18 +233,18 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_PaperAll_Draw) {
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_ScissorsAll_Draw) {
-	int Rock = 1;
-	//int Paper = 2;
-	int Scissors = 3;
+    int Rock = 1;
+    //int Paper = 2;
+    int Scissors = 3;
 
-	// setup
-	_input.str("1 3");  // rounds symbol
+    // setup
+    _input.str("1 3");  // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(1)
-		.WillOnce(Return(Scissors));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(1)
+        .WillOnce(Return(Scissors));
 
-	// execute
+    // execute
     _game->run();
 
     // assert
@@ -252,18 +252,18 @@ TEST_F(RockPapersScissorsGameFixtureTest, GameRun_RoundOutcome_ScissorsAll_Draw)
 }
 
 TEST_F(RockPapersScissorsGameFixtureTest, GameRun_NumberOfRoundsPlayed) {
-	int Rock = 1;
-	int Scissors = 3;
+    int Rock = 1;
+    int Scissors = 3;
 
-	// setup
-	_input.str("2 1 1"); // rounds symbol
+    // setup
+    _input.str("2 1 1"); // rounds symbol
 
-	EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
-		.Times(2)
-		.WillOnce(Return(Scissors))
-		.WillOnce(Return(Scissors));
+    EXPECT_CALL(*_rngMock, generateRandomNumber(Rock, Scissors))
+        .Times(2)
+        .WillOnce(Return(Scissors))
+        .WillOnce(Return(Scissors));
 
-	// execute
+    // execute
     _game->run();
 
     // assert

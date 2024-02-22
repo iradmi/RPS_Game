@@ -14,10 +14,10 @@ public:
     IGame() = default;
 
     IGame(const IGame& other) = delete;
-	IGame(IGame&& other) noexcept = default;
+    IGame(IGame&& other) noexcept = default;
 
-	IGame& operator=(const IGame& other) = delete;
-	IGame& operator=(IGame&& other) noexcept = default;
+    IGame& operator=(const IGame& other) = delete;
+    IGame& operator=(IGame&& other) noexcept = default;
 
     virtual ~IGame() = default;
     

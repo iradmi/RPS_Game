@@ -17,18 +17,18 @@ namespace MtEngine {
 
 class MersenneTwisterRngEngine : public Rng::IRandomNumberGenerator {
 public:
-	MersenneTwisterRngEngine();
-	
-	/// Brief:      Function returns random number between param lower_bound and upper_bound.
-	///             Uniform distribution is used.
-	/// Param[in]:  lowerBound - minimum number the generator will generate values from.
-	/// Param[in]:  uperBound  - maximum number the generator will generate values to.
-	/// Return:     Random number between [lowerBound, uperBound].
-	virtual int64_t generateRandomNumber(int64_t lowerBound, int64_t uperBound) override;
-	
+    MersenneTwisterRngEngine();
+    
+    /// Brief:      Function returns random number between param lower_bound and upper_bound.
+    ///             Uniform distribution is used.
+    /// Param[in]:  lowerBound - minimum number the generator will generate values from.
+    /// Param[in]:  uperBound  - maximum number the generator will generate values to.
+    /// Return:     Random number between [lowerBound, uperBound].
+    virtual int64_t generateRandomNumber(int64_t lowerBound, int64_t uperBound) override;
+    
 private:
-	std::random_device _rd;  // a seed source for the random number engine
-	std::mt19937_64    _rng;
+    std::random_device _rd;  // a seed source for the random number engine
+    std::mt19937_64    _rng;
 };
 
 } //MtEngine namespace 

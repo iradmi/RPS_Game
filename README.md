@@ -31,7 +31,7 @@ Round winner is determined by the following schema:
 <br>
 
 ***Winner is pronounced when the entered number of rounds are played.***
-	
+    
 ## How to BUILD
 Position yourself in project's **root** directory (same directory README is located in).
 >BUILD: ***'make'*** command.

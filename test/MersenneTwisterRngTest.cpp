@@ -15,9 +15,9 @@ class MersenneTwisterFixture : public ::testing::Test {
 };
 
 TEST_F(MersenneTwisterFixture, RandomNumberGeneration) {
-	const int64_t MIN = -5;
-	const int64_t MAX = 10;
+    const int64_t MIN = -5;
+    const int64_t MAX = 10;
 
-	EXPECT_GE(_p->generateRandomNumber(MIN,MAX), MIN);
-	EXPECT_LE(_p->generateRandomNumber(MIN,MAX), MAX);
+    EXPECT_GE(_p->generateRandomNumber(MIN,MAX), MIN);
+    EXPECT_LE(_p->generateRandomNumber(MIN,MAX), MAX);
 }

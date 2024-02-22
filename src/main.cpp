@@ -11,7 +11,7 @@
 #include "MersenneTwisterRngEngine.h"
 
 int main() {
-	std::shared_ptr<Rng::IRandomNumberGenerator> rng = std::make_shared<MtEngine::MersenneTwisterRngEngine>();
+    std::shared_ptr<Rng::IRandomNumberGenerator> rng = std::make_shared<MtEngine::MersenneTwisterRngEngine>();
     std::unique_ptr<Game::IGame> game = std::make_unique<Game::RpsGame>(rng);
 
     game->run();

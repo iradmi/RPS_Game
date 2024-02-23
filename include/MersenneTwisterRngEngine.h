@@ -31,6 +31,6 @@ private:
     std::mt19937_64    _rng;
 };
 
-} //MtEngine namespace 
+} // MtEngine namespace 
 
 #endif // RPS_PROJECT_MERSENNE_TWISTER_RNG_ENGINE_H

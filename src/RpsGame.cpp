@@ -48,7 +48,7 @@ void RpsGame::printWelcomeMsg() const {
 void RpsGame::printSymbolInfo() const {
     _oStream << '\n'
              << "Pick your symbol by choosing the number:\n"
-              << "1) " << _ROCK_SYMBOL_UTF     << "\t(rock)\n"
+             << "1) " << _ROCK_SYMBOL_UTF     << "\t(rock)\n"
              << "2) " << _PAPER_SYMBOL_UTF    << "\t(paper)\n"
              << "3) " << _SCISSORS_SYMBOL_UTF << "\t(scissors)\n\n"
              << "Your choice is: ";
@@ -126,16 +126,16 @@ void RpsGame::determineAndPronounceRoundWinner(Symbol userSymbol, Symbol compute
      Player roundWinner = determineRoundWinner(userSymbol, computerSymbol);
      
      _oStream << "\nYou chose " 
-          << convertSymbolToUtf(userSymbol) 
-          << "  whilst computer chose  " 
-          << convertSymbolToUtf(computerSymbol)
-          << " \n\n";
+              << convertSymbolToUtf(userSymbol) 
+              << "  whilst computer chose  " 
+              << convertSymbolToUtf(computerSymbol)
+              << " \n\n";
     
     auto printBeatsMsg = [&](const Symbol winner, const Symbol loser) {
         _oStream << convertSymbolToUtf(winner) 
-                  << "   beats   " 
-                  << convertSymbolToUtf(loser) 
-                  << "\n\n";
+                 << "   beats   " 
+                 << convertSymbolToUtf(loser) 
+                 << "\n\n";
     };
 
     if (roundWinner == Player::PC) { 

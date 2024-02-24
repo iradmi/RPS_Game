@@ -12,6 +12,7 @@
 #include <string_view>
 
 #include "RpsGame.h"
+#include "../src/RpsGame.cpp"
 
 using namespace testing;
 

@@ -5,16 +5,14 @@
 /// either version 3 of the License, or (at your option) any later version.
 
 /// CPP standard libs
-#include <memory>
-
 #include "RpsGame.h"
+#include "RpsGame.cpp"
 #include "MersenneTwisterRngEngine.h"
 
 int main() {
-    std::shared_ptr<Rng::IRandomNumberGenerator> rng = std::make_shared<MtEngine::MersenneTwisterRngEngine>();
-    std::unique_ptr<Game::IGame> game = std::make_unique<Game::RpsGame>(rng);
+    Game::RpsGame<MtEngine::MersenneTwisterRngEngine> game(std::move(MtEngine::MersenneTwisterRngEngine{}));
 
-    game->run();
+    game.run();
 
     return 0;
 }

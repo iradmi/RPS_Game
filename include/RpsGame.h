@@ -15,22 +15,23 @@
 #include <iostream>
 
 /// project includes
-#include "IRandomNumberGenerator.h"
-#include "IGame.h"
+#include "RandomNumberGeneratorConcept.h"
+#include "GameConcept.h"
 
 
 namespace Game {
 using milliseconds_t = std::chrono::milliseconds;
 /// Rock-Papers-Scissors Game class
-class RpsGame : public IGame {
+template<Rng::EngineC EngineT>
+class RpsGame {
 public:
-    RpsGame(std::shared_ptr<Rng::IRandomNumberGenerator> rng, 
+    RpsGame(EngineT&& rng, 
             milliseconds_t roundsDelay = milliseconds_t(1200),
             std::istream& iStream = std::cin,
             std::ostream& oStream = std::cout);
 
     /// IGame inherited
-    void run() override;
+    void run();
   
 private:
                  
@@ -116,12 +117,12 @@ private:
     static constexpr uint8_t _ROUNDS_NUM_MIN = 1;
     static constexpr uint8_t _ROUNDS_NUM_MAX = 100;
 
-    size_t                                        _currRoundNum;
-    uint8_t                                       _userScore;
-    uint8_t                                       _pcScore;
-    std::shared_ptr<Rng::IRandomNumberGenerator>  _rngEngine;
-    milliseconds_t                                _roundDelay; // delay for presenting the next user input prompt,
-                                                               // mostly for more pleasant user experience
+    size_t          _currRoundNum;
+    uint8_t         _userScore;
+    uint8_t         _pcScore;
+    EngineT&        _rngEngine;
+    milliseconds_t  _roundDelay; // delay for presenting the next user input prompt,
+                                 // mostly for more pleasant user experience
 
     std::istream& _iStream;
     std::ostream& _oStream;

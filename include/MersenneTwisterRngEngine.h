@@ -11,11 +11,11 @@
 #include <random>
 
 /// project libs
-#include "IRandomNumberGenerator.h"
+#include "RandomNumberGeneratorConcept.h"
 
 namespace MtEngine {
 
-class MersenneTwisterRngEngine : public Rng::IRandomNumberGenerator {
+class MersenneTwisterRngEngine {
 public:
     MersenneTwisterRngEngine();
     
@@ -24,7 +24,7 @@ public:
     /// Param[in]:  lowerBound - minimum number the generator will generate values from.
     /// Param[in]:  uperBound  - maximum number the generator will generate values to.
     /// Return:     Random number between [lowerBound, uperBound].
-    virtual int64_t generateRandomNumber(int64_t lowerBound, int64_t uperBound) override;
+    int64_t generateRandomNumber(int64_t lowerBound, int64_t uperBound);
     
 private:
     std::random_device _rd;  // a seed source for the random number engine

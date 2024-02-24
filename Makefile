@@ -14,7 +14,7 @@ CPPFLAGS := -O3 -Wall -Wextra -pedantic -std=c++20
 CPPFLAGS += -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wcast-align
 CPPFLAGS += -Wstrict-overflow=5 -Wwrite-strings
 CPPFLAGS += -Wcast-qual -Wswitch-default -Wswitch-enum 
-CPPFLAGS += -Wconversion -Wunreachable-code -Weffc++
+CPPFLAGS += -Wconversion -Wunreachable-code -Weffc++ -fconcepts-diagnostics-depth=2
 LDFLAGS  := 
 LDLIBS   := 
 

@@ -17,7 +17,8 @@
 
 namespace Game {
 
-RpsGame::RpsGame(std::shared_ptr<Rng::IRandomNumberGenerator> rng, 
+template<Rng::EngineC EngineT>
+RpsGame<EngineT>::RpsGame(EngineT&& rng, 
                  milliseconds_t roundDelay,
                  std::istream& iStream,
                  std::ostream& oStream) 
@@ -29,7 +30,8 @@ RpsGame::RpsGame(std::shared_ptr<Rng::IRandomNumberGenerator> rng,
       _iStream(iStream),
       _oStream(oStream) {}
 
-void RpsGame::printWelcomeMsg() const {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::printWelcomeMsg() const {
     _oStream << "\n"
              << "Welcome to "
              << "Rock ("     << convertSymbolToUtf(Symbol::Rock)     << "), "
@@ -45,7 +47,8 @@ void RpsGame::printWelcomeMsg() const {
              << "  beats (cuts) paper  "      << convertSymbolToUtf(Symbol::Paper)    << "\n\n\n";
 }
 
-void RpsGame::printSymbolInfo() const {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::printSymbolInfo() const {
     _oStream << '\n'
              << "Pick your symbol by choosing the number:\n"
              << "1) " << _ROCK_SYMBOL_UTF     << "\t(rock)\n"
@@ -54,18 +57,21 @@ void RpsGame::printSymbolInfo() const {
              << "Your choice is: ";
 }
 
-void RpsGame::printRoundInfo(size_t round) const {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::printRoundInfo(size_t round) const {
     _oStream << "\n------------------ "
              << "\nROUND NUMBER " << round << "!"
              << "\n------------------ \n";
 }
 
-void RpsGame::refreshConsoleInput() const {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::refreshConsoleInput() const {
     _iStream.clear();
     _iStream.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
 }
 
-std::string_view constexpr RpsGame::convertSymbolToUtf(RpsGame::Symbol symbol) {
+template<Rng::EngineC EngineT>
+std::string_view constexpr RpsGame<EngineT>::convertSymbolToUtf(RpsGame::Symbol symbol) {
     switch (symbol) {
     case Symbol::Rock:     return _ROCK_SYMBOL_UTF;
     case Symbol::Paper:    return _PAPER_SYMBOL_UTF;
@@ -74,22 +80,26 @@ std::string_view constexpr RpsGame::convertSymbolToUtf(RpsGame::Symbol symbol) {
     }
 }
 
-bool RpsGame::isNumberOfRoundsValid(size_t num) const {
+template<Rng::EngineC EngineT>
+bool RpsGame<EngineT>::isNumberOfRoundsValid(size_t num) const {
     return (num >= _ROUNDS_NUM_MIN && num <= _ROUNDS_NUM_MAX) ? true : false;
 }
 
-bool RpsGame::isSymbolNumberValid(size_t num) const {
+template<Rng::EngineC EngineT>
+bool RpsGame<EngineT>::isSymbolNumberValid(size_t num) const {
     return (num >= static_cast<size_t>(Symbol::Rock) &&
             num <= static_cast<size_t>(Symbol::Scissors)) ? true : false;
 }
 
-RpsGame::Symbol RpsGame::generateComputerSymbol() const {
-    return static_cast<Symbol>(_rngEngine->generateRandomNumber(static_cast<int64_t>(Symbol::Rock), 
-                                                                static_cast<int64_t>(Symbol::Scissors)));
+template<Rng::EngineC EngineT>
+RpsGame<EngineT>::Symbol RpsGame<EngineT>::generateComputerSymbol() const {
+    return static_cast<Symbol>(_rngEngine.generateRandomNumber(static_cast<int64_t>(Symbol::Rock), 
+                                                               static_cast<int64_t>(Symbol::Scissors)));
     
 }
 
-size_t RpsGame::promptAndValidateNumberOfRoundsInput() {
+template<Rng::EngineC EngineT>
+size_t RpsGame<EngineT>::promptAndValidateNumberOfRoundsInput() {
     bool inputInvalid = true;
 
     size_t numOfRndsInput = 0;
@@ -116,13 +126,16 @@ size_t RpsGame::promptAndValidateNumberOfRoundsInput() {
     return numOfRndsInput;
 }
 
-RpsGame::Player RpsGame::determineRoundWinner(RpsGame::Symbol userSymbol, 
+template<Rng::EngineC EngineT>
+RpsGame<EngineT>::Player RpsGame<EngineT>::determineRoundWinner(RpsGame::Symbol userSymbol, 
                                               RpsGame::Symbol computerSymbol) const {
-    return static_cast<RpsGame::Player> ((3 + static_cast<int>(userSymbol) - 
-                                          static_cast<int>(computerSymbol)) % 3);
+    return static_cast<RpsGame::Player> ((_NUM_OF_SYMBOLS
+                                          + static_cast<int>(userSymbol) 
+                                          - static_cast<int>(computerSymbol)) % _NUM_OF_SYMBOLS);
 }
 
-void RpsGame::determineAndPronounceRoundWinner(Symbol userSymbol, Symbol computerSymbol) {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::determineAndPronounceRoundWinner(Symbol userSymbol, Symbol computerSymbol) {
      Player roundWinner = determineRoundWinner(userSymbol, computerSymbol);
      
      _oStream << "\nYou chose " 
@@ -157,7 +170,8 @@ void RpsGame::determineAndPronounceRoundWinner(Symbol userSymbol, Symbol compute
     }
 }
 
-RpsGame::Symbol RpsGame::promptUserSymbolInput() {
+template<Rng::EngineC EngineT>
+RpsGame<EngineT>::Symbol RpsGame<EngineT>::promptUserSymbolInput() {
     size_t userSymbolNum = 0;
 
     while (true) {
@@ -178,7 +192,8 @@ RpsGame::Symbol RpsGame::promptUserSymbolInput() {
     }
 }
 
-void RpsGame::playRound() {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::playRound() {
     Symbol userSymbol = promptUserSymbolInput();
     
     Symbol computerSymbol = generateComputerSymbol();
@@ -186,8 +201,8 @@ void RpsGame::playRound() {
     determineAndPronounceRoundWinner(userSymbol, computerSymbol);
 }
 
-
-void RpsGame::pronounceGameWinner() {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::pronounceGameWinner() {
     _oStream << "\n------------------ "
              << "\nFINAL SCORE !"
              << "\n------------------ \n";
@@ -226,14 +241,16 @@ void RpsGame::pronounceGameWinner() {
              << "\n\n";
 }
 
-void RpsGame::startCompetition(size_t numRounds) {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::startCompetition(size_t numRounds) {
     while (++_currRoundNum <= numRounds) {
         playRound();
         std::this_thread::sleep_for(_roundDelay);
     }
 }
 
-void RpsGame::run() {
+template<Rng::EngineC EngineT>
+void RpsGame<EngineT>::run() {
     printWelcomeMsg();
     size_t numRounds = promptAndValidateNumberOfRoundsInput();
     startCompetition(numRounds);

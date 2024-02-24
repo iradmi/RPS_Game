@@ -7,22 +7,14 @@
 #ifndef RPS_PROJECT_IGAME_H
 #define RPS_PROJECT_IGAME_H
 
+#include <concepts>
+
 namespace Game {
 
-class IGame {
-public:
-    IGame() = default;
-
-    IGame(const IGame& other) = delete;
-    IGame(IGame&& other) noexcept = default;
-
-    IGame& operator=(const IGame& other) = delete;
-    IGame& operator=(IGame&& other) noexcept = default;
-
-    virtual ~IGame() = default;
-    
-    virtual void run() = 0;
-};  // class IGame
+template <typename TGame>
+concept GameC = requires(TGame game) {
+    { game.run() } -> std::same_as<void>;
+};
 
 } // namespace Game
 
